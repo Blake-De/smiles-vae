@@ -1,0 +1,29 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore data files
+*.npy
+*.npz
+*.csv
+*.tsv
+*.json
+*.gz
+*.zip
+
+# Ignore model files
+*.pt
+*.pth
+*.pkl
+
+# Ignore Weights & Biases logs
+wandb/
+
+# OS-specific files
+.DS_Store
+
+# Environment files
+.env
