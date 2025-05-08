@@ -66,3 +66,7 @@ File: Description
 - preprocessing.ipynb: Notebook used to prepare and filter SMILES
 - autoencoder.py: Trained for to confirm reconstruction error
 - smiles_vae_env.yml: Conda env
+
+## Acknowledgments
+Based on a University of Pittsburgh assignment.
+
