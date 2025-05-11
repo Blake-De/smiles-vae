@@ -56,9 +56,9 @@ python smiles_vae.py --train_data data/smiles_train.npy --out smiles_vae_model.p
 - Evaluation printed for valid, unique, and novel molecules
 
 ## Notes
-The preprocessing script was provided by the course instructor; filtering and dataset slicing were adapted for training speed.
+The preprocessing script was provided by the course instructor. Filtering and dataset slicing were used for training speed and can be found in the preprocessing.npy.
 
-Full PubChem-derived dataset not included — place .npy or filtered .smi.gz files in /data if rerunning.
+Full PubChem-derived dataset not included.
 
 ## Files
 File: Description  
