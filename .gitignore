@@ -192,3 +192,18 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Exclude all .gz files
+*.gz
+
+# Exclude all .ipynb files
+*.ipynb
+
+# Except the preprocessing notebook
+!preprocessing.ipynb
+
+# Ignore all evaluation scripts
+eval*.py
+
+# Ignore all model checkpoints
+model_epoch_*.pth
