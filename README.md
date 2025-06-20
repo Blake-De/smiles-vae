@@ -20,7 +20,7 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
  
 ## Data
 
-- **Source**: The dataset used here is SMILES from PubChem 
+- **Source**: The dataset is SMILES from PubChem.
 
 ### Preprocessing
 - Libraries: `gzip`, `numpy`, `pickle`
@@ -30,7 +30,7 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
   - `$` = End of sequence
 - All sequences are padded to a fixed `max_length` (e.g., 150) with zeros.
 - Only molecules with SMILES shorter than a given threshold (`max_length`) are kept.
-      - Threshold used is training was 150. (62,129,800 valid SMILES strings)
+  - Threshold used is training was 150. (62,129,800 valid SMILES strings)
 - A NumPy array is created to hold the filtered, tokenized SMILES strings
 - - The final dataset is saved as `train_data.npy` using `np.save()`.
 
