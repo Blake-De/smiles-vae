@@ -18,45 +18,103 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
 - **Framework:** PyTorch (2.6.0), GPU-accelerated
 - **Latent Space:** 1024-dimensions
 
-## Metrics Reported
-- **ValidSMI**: # of valid SMILES generated
-- **UniqueValidMols**: # of unique valid molecules
-- **NovelMols**: # not found in training set
-- **AveRings**: Average ring count (chemical complexity)
+  ## Development Environment Requirements
 
-### Model Performance
+- **Python**: 3.10+ 
+- **PyTorch**: 2.6.0 with CUDA 12.4 (for GPU acceleration)  
+- **RDKit**: 2024.03.5 (installed via `conda-forge`)  
+- **Libraries**:  
+  - `torchvision`, `torchaudio`  
+  - `scikit-learn`, `pandas`, `NumPy`, `Matplotlib`  
+  - `wandb` (Weights & Biases) for experiment tracking  
+  - `jupyterlab` for interactive development  
+- Conda (recommended: Miniconda or Anaconda)
+- All dependencies are specified in the Conda environment file: `smiles_vae_env.yml`
 
-These are results from evaluating the model on 1,000 samples from the latent space (as per assignment rubric):
+## Installation
 
-- **UniqueSMI**: 1000
-- **ValidSMI**: 839	
-- **AveRings**: 2.8081
-- **UniqueValidMols**: 839
-- **NovelMols**: 836
+### 1. Clone the repository:
+ 
+ ```bash
+git clone https://github.com/Blake-De/smiles-vae.git
+```
 
+Navigate into the project directory:
 
-## Usage
+```bash
+cd smiles-vae
+```
 
-### 1. Create and activate the environment
+### 2. Create and activate the conda environment:
+
 ```bash
 conda env create -f smiles_vae_env.yml
 conda activate smiles-vae
 ```
-### 2. Train the model
+
+## Usage
+
+### Train the model
 ```bash
 python smiles_vae.py --train_data data/smiles_train.npy --out smiles_vae_model.pth
 ```
 
-### Example args (adjust as needed)
+### Command-Line Arguments
+
+| Argument           | Type   | Description                                           | Default              |
+|--------------------|--------|-------------------------------------------------------|----------------------|
+| `--train_data`     | str    | Path to the training data file (e.g., `.npy`)         | **(required)**       |
+| `--out`            | str    | Path to save the exported decoder model               | `vae_generate.pth`   |
+| `--batch_size`     | int    | Number of SMILES strings per batch                    | `512`                |
+| `--epochs`         | int    | Number of training epochs                             | `5`                  |
+| `--lr`             | float  | Learning rate                                         | `1e-4`               |
+| `--embedding_dim`  | int    | Dimensionality of SMILES token embeddings             | `20`                 |
+| `--hidden_size`    | int    | Size of GRU hidden layers                             | `1024`               |
+| `--num_layers`     | int    | Number of GRU layers                                  | `1`                  |
+| `--kl_weight`      | float  | Weight applied to KL divergence in the loss function  | `0.001`              |
+| `--max_length`     | int    | Maximum SMILES string length                          | `150`                |
+| `--evals`          | int    | Number of molecules to generate for evaluation        | `1000`               |
+
+## Evaluation Metrics
+
+- **UniqueSMI**: Number of unique molecules
+- **ValidSMI**: Number of valid SMILES strings generated  
+- **UniqueValidMols**: Number of unique valid molecules  
+- **NovelMols**: Number of molecules not found in the training set  
+- **AveRings**: Average number of rings (proxy for chemical complexity)
+
+## Output
+
+- **Traced Decoder**: Saved as `.pth` using TorchScript for efficient inference and sampling  
+- **Console Output**: During training, the console prints:
+  - Training loss, reconstruction loss, and KL divergence at log intervals  
+  - Evaluation metrics at model save checkpoints  
+- **Model Checkpoints**: Decoder is saved periodically during training  
+- **WandB Logging**: If enabled, logs all training and evaluation metrics in real time
+
+### Model Performance
+
+The model generally preformace well near the defualts. 
+These are results from epoch 10 by evaluating the model on 1,000 samples from the latent space. This model was ceated with command: 
+
 ```bash
---batch_size 512 --epochs 10 --kl_weight 0.001 --embedding_dim 20 --hidden_size 1024
+python smiles_vae.py \
+  --train_data data/smiles_train.npy \
+  --out smiles_vae_model.pth \
+  --epochs 18 \
+  --num_layers 2 \
+  --kl_weight 0.01	
 ```
 
-### Output
+| Metric             | Value   |
+|--------------------|---------|
+| **UniqueSMI**       | 1000    |
+| **ValidSMI**        | 839     |
+| **AveRings**        | 2.8081  |
+| **UniqueValidMols** | 839     |
+| **NovelMols**       | 836     |
 
-- Traced decoder saved as .pth for evaluation
-- Weights & Biases logs (if enabled)
-- Evaluation printed for valid, unique, and novel molecules
+
 
 
 
