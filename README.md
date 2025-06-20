@@ -2,18 +2,21 @@
 
 This project implements a Variational Autoencoder (VAE) using PyTorch and generates molecular SMILES strings. 
 
-It was developed as part of a ML course assignment, but demonstrates real-world generative modeling skills.
-
 ## Overview
 
-- **Baseline:** Standard Autoencoder trained first to confirm basic reconstruction
-- **Model:** Variational Autoencoder (VAE)
-- **Input:** Tokenized SMILES strings (PubChem filtered subset)
-- **Output:** NovelMols, valid molecular structures
-- **Framework:** PyTorch (2.6.0), GPU-accelerated
-- **Latent Dimension:** 1024
+This project implements a Variational Autoencoder (VAE) in PyTorch that encodes tokenized molecular SMILES strings into a latent space using a GRU-based encoder, then decodes samples from this space into new molecules using a GRU-based decoder. 
 
-The model encodes tokenized molecular SMILES strings into a latent space, then decodes samples from this space into new molecules.
+### Key Features:
+- **Baseline:** Standard Autoencoder trained first to confirm basic reconstruction
+- **Model Architecture:**
+  - **Encoder:** GRU encoder that maps tokenized SMILES strings to a 1024-dimensional latent space
+  - **Decoder:** GRU decoder that autoregressively reconstructs SMILES strings from latent samples
+- **Training Strategy:** Teacher forcing with cross-entropy loss for reconstruction and KL divergence for regularization
+- **Input:** Tokenized SMILES strings (PubChem filtered subset)
+- **Export:** Decoder exported as a TorchScript module 
+- **Output:** NovelMols — valid and unique molecular structures
+- **Framework:** PyTorch (2.6.0), GPU-accelerated
+- **Latent Space:** 1024-dimensions
 
 ## Metrics Reported
 - **ValidSMI**: # of valid SMILES generated
@@ -55,10 +58,7 @@ python smiles_vae.py --train_data data/smiles_train.npy --out smiles_vae_model.p
 - Weights & Biases logs (if enabled)
 - Evaluation printed for valid, unique, and novel molecules
 
-## Notes
-The preprocessing script was provided by the course instructor. Filtering and dataset slicing were used for training speed and can be found in the preprocessing.npy.
 
-Full PubChem-derived dataset not included.
 
 ## Files
 File: Description  
@@ -67,6 +67,14 @@ File: Description
 - autoencoder.py: Trained for to confirm reconstruction error
 - smiles_vae_env.yml: Conda env
 
-## Acknowledgments
-Based on a University of Pittsburgh assignment.
+## Author & Acknowledgments
 
+Blake Degioanni  
+[GitHub](https://github.com/Blake-De) • [LinkedIn](https://www.linkedin.com/in/blake-degioanni)
+
+This project was completed as a self-directed assignment for a graduate-level machine learning course at the University of Pittsburgh,  
+with a focus on real-world applications of generative modeling.
+
+## Notes
+
+The preprocessing script was mostly provided by the course instructor. Filtering and dataset slicing were used for training speed and can be found in the preprocessing.npy.
