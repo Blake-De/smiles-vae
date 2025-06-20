@@ -23,18 +23,18 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
 - **Source**: The dataset used here is SMILES from PubChem (62,129,800 valid SMILES strings)
 
 ### Preprocessing
+- Libraries: `gzip`, `numpy`, `pickle`
+- Map SMILES characters to integer indices using a reduced 28-character vocabulary.
+- Special tokens:
+  - `^` = Start of sequence (not used in generation)
+  - `$` = End of sequence
+- All sequences are padded to a fixed `max_length` (e.g., 150) with zeros.
+- Only molecules with SMILES shorter than a given threshold (`max_length`) are kept.
+      - Threshold used is training was 150. 
+- A NumPy array is created to hold the filtered, tokenized SMILES strings
+- - The final dataset is saved as `train_data.npy` using `np.save()`.
 
-   - Libraries: `gzip`, `numpy`, `pickle`
-   - Map SMILES characters to integer indices using a reduced 28-character vocabulary.
-   - Special tokens:
-     - `^` = Start of sequence (not used in generation)
-     - `$` = End of sequence
-   - All sequences are padded to a fixed `max_length` (e.g., 150) with zeros.
-   - Only molecules with SMILES shorter than a given threshold (`max_length`) are kept.
-   - A NumPy array is created to hold the filtered, tokenized SMILES strings
-   - The final dataset is saved as `train_data.npy` using `np.save()`.
-
-> Note: Filtering thresholds like `max_length` may be adjusted during experimentation (e.g., 20, 50, 150). Found is the preproccessing.ipynb
+> Note: Filtering thresholds like `max_length` may be adjusted during experimentation (e.g., 20, 50, 150). See `preprocessing.ipynb` for data filtering and SMILES tokenization.
 
 
   ## Development Environment Requirements
@@ -113,7 +113,7 @@ python smiles_vae.py --train_data data/smiles_train.npy --out smiles_vae_model.p
 
 ### Model Performance
 
-The model generally preformace well near the defualts. 
+The model generally performs well using parameters close to the defaults.
 These are results from epoch 10 by evaluating the model on 1,000 samples from the latent space. This model was ceated with command: 
 
 ```bash
@@ -156,4 +156,4 @@ with a focus on real-world applications of generative modeling.
 
 ## Notes
 
-The preprocessing script was mostly provided by the course instructor. Filtering and dataset slicing were used for training speed and can be found in the preprocessing.npy.
+The preprocessing notebook was adapted from instructor-provided code. Filtering thresholds and dataset slicing logic used for training speed are included in `preprocessing.ipynb`.
