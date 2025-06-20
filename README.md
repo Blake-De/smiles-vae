@@ -17,6 +17,25 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
 - **Output:** NovelMols — valid and unique molecular structures
 - **Framework:** PyTorch (2.6.0), GPU-accelerated
 - **Latent Space:** 1024-dimensions
+ 
+## Data
+
+- **Source**: The dataset used here is SMILES from PubChem (62,129,800 valid SMILES strings)
+
+### Preprocessing
+
+   - Libraries: `gzip`, `numpy`, `pickle`
+   - Map SMILES characters to integer indices using a reduced 28-character vocabulary.
+   - Special tokens:
+     - `^` = Start of sequence (not used in generation)
+     - `$` = End of sequence
+   - All sequences are padded to a fixed `max_length` (e.g., 150) with zeros.
+   - Only molecules with SMILES shorter than a given threshold (`max_length`) are kept.
+   - A NumPy array is created to hold the filtered, tokenized SMILES strings
+   - The final dataset is saved as `train_data.npy` using `np.save()`.
+
+> Note: Filtering thresholds like `max_length` may be adjusted during experimentation (e.g., 20, 50, 150). Found is the preproccessing.ipynb
+
 
   ## Development Environment Requirements
 
@@ -114,16 +133,18 @@ python smiles_vae.py \
 | **UniqueValidMols** | 839     |
 | **NovelMols**       | 836     |
 
+## Project Structure
 
-
-
-
-## Files
-File: Description  
-- train_smiles_vae.py: Main training script  
-- preprocessing.ipynb: Notebook used to prepare and filter SMILES
-- autoencoder.py: Trained for to confirm reconstruction error
-- smiles_vae_env.yml: Conda env
+```bash
+cell-moa-classifier/
+├── train_smiles_vae.py         # Main training script  
+├── smiles_vae_env.yml          # Conda environment file  
+├── README.md                   # Project documentation  
+├── .gitignore                  # Git ignore rules
+├── preprocessing.ipynb         # Notebook used to prepare and filter SMILES
+├── autoencoder.py              # Trained for to confirm reconstruction error
+└── model.pth                   # Trained model output (not tracked in Git)
+```
 
 ## Author & Acknowledgments
 
