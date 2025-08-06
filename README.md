@@ -14,7 +14,7 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
 - **Training Strategy:** Teacher forcing with cross-entropy loss for reconstruction and KL divergence for regularization
 - **Input:** Tokenized SMILES strings (PubChem filtered subset)
 - **Export:** Decoder exported as a TorchScript module 
-- **Output:** NovelMols — valid and unique molecular structures
+- **Output:** NovelMols (valid and unique molecular structures)
 - **Framework:** PyTorch (2.6.0), GPU-accelerated
 - **Latent Space:** 1024-dimensions
  
@@ -32,7 +32,7 @@ This project implements a Variational Autoencoder (VAE) in PyTorch that encodes 
 - Only molecules with SMILES shorter than a given threshold (`max_length`) are kept.
   - Threshold used is training was 150. (62,129,800 valid SMILES strings)
 - A NumPy array is created to hold the filtered, tokenized SMILES strings
-- - The final dataset is saved as `train_data.npy` using `np.save()`.
+  - The final dataset is saved as `train_data.npy` using `np.save()`.
 
 > Note: Filtering thresholds like `max_length` may be adjusted during experimentation (e.g., 20, 50, 150). See `preprocessing.ipynb` for data filtering and SMILES tokenization.
 
@@ -157,3 +157,8 @@ with a focus on real-world applications of generative modeling.
 ## Notes
 
 The preprocessing notebook was adapted from instructor-provided code. Filtering thresholds and dataset slicing logic used for training speed are included in `preprocessing.ipynb`.
+
+## License
+
+This project is licensed under the MIT License.
+
