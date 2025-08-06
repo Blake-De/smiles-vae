@@ -136,7 +136,7 @@ python smiles_vae.py \
 ## Project Structure
 
 ```bash
-cell-moa-classifier/
+smiles-vae/
 ├── train_smiles_vae.py         # Main training script  
 ├── smiles_vae_env.yml          # Conda environment file  
 ├── README.md                   # Project documentation  
